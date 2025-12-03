@@ -40,11 +40,14 @@ public final class TweenManager: @unchecked Sendable {
     /// Creates a new tween manager.
     public init() {}
 
-    /// Adds a tween to be managed.
-    /// - Parameters:
-    ///   - tween: The tween to manage.
-    ///   - onUpdate: Called each frame with the current value.
-    ///   - onComplete: Called when the tween completes.
+    /**
+     Adds a tween to be managed.
+
+     - Parameters:
+       - tween: The tween to manage.
+       - onUpdate: Called each frame with the current value.
+       - onComplete: Called when the tween completes.
+     */
     @discardableResult
     public func add<Value: Tweenable>(
         _ tween: Tween<Value>,

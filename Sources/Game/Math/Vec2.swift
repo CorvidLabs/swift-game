@@ -33,8 +33,10 @@ public struct Vec2: Sendable, Hashable, Codable {
         sqrt(x * x + y * y)
     }
 
-    /// Returns the squared magnitude of this vector.
-    /// Useful for distance comparisons without expensive sqrt.
+    /**
+     Returns the squared magnitude of this vector.
+     Useful for distance comparisons without expensive sqrt.
+     */
     public var magnitudeSquared: Double {
         x * x + y * y
     }

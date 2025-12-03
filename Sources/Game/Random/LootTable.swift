@@ -29,10 +29,13 @@ public struct LootTable<Item: Sendable>: Sendable {
     private let entries: [Entry]
     private let dropChance: Double
 
-    /// Creates a loot table with the given entries.
-    /// - Parameters:
-    ///   - entries: The items that can be dropped.
-    ///   - dropChance: The probability that any loot drops (0.0 to 1.0).
+    /**
+     Creates a loot table with the given entries.
+
+     - Parameters:
+       - entries: The items that can be dropped.
+       - dropChance: The probability that any loot drops (0.0 to 1.0).
+     */
     public init(entries: [Entry], dropChance: Double = 1.0) {
         self.entries = entries
         self.dropChance = max(0, min(1, dropChance))

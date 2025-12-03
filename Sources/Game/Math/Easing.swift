@@ -1,7 +1,9 @@
 import Foundation
 
-/// Easing functions for smooth animations and transitions.
-/// All functions take a value in range [0, 1] and return an eased value.
+/**
+ Easing functions for smooth animations and transitions.
+ All functions take a value in range [0, 1] and return an eased value.
+ */
 public enum Easing {
     // MARK: - Linear
 
