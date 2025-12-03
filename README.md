@@ -1,9 +1,9 @@
 # Game
 
-[![macOS](https://img.shields.io/github/actions/workflow/status/0xLeif/swift-game/macOS.yml?label=macOS&branch=main)](https://github.com/0xLeif/swift-game/actions/workflows/macOS.yml)
-[![ubuntu](https://img.shields.io/github/actions/workflow/status/0xLeif/swift-game/ubuntu.yml?label=ubuntu&branch=main)](https://github.com/0xLeif/swift-game/actions/workflows/ubuntu.yml)
-[![License](https://img.shields.io/github/license/0xLeif/swift-game)](https://github.com/0xLeif/swift-game/blob/main/LICENSE)
-[![Version](https://img.shields.io/github/v/release/0xLeif/swift-game)](https://github.com/0xLeif/swift-game/releases)
+[![macOS](https://img.shields.io/github/actions/workflow/status/CorvidLabs/swift-game/macOS.yml?label=macOS&branch=main)](https://github.com/CorvidLabs/swift-game/actions/workflows/macOS.yml)
+[![ubuntu](https://img.shields.io/github/actions/workflow/status/CorvidLabs/swift-game/ubuntu.yml?label=ubuntu&branch=main)](https://github.com/CorvidLabs/swift-game/actions/workflows/ubuntu.yml)
+[![License](https://img.shields.io/github/license/CorvidLabs/swift-game)](https://github.com/CorvidLabs/swift-game/blob/main/LICENSE)
+[![Version](https://img.shields.io/github/v/release/CorvidLabs/swift-game)](https://github.com/CorvidLabs/swift-game/releases)
 
 A comprehensive, protocol-oriented game development library for Swift 6.
 
@@ -27,7 +27,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/0xLeif/swift-game.git", from: "0.1.0")
+    .package(url: "https://github.com/CorvidLabs/swift-game.git", from: "0.1.0")
 ]
 ```
 
@@ -127,7 +127,7 @@ world.query(Position.self, Velocity.self) { entity, pos, vel in
 
 ## Documentation
 
-Documentation is available on [GitHub Pages](https://0xleif.github.io/swift-game/documentation/game).
+Documentation is available on [GitHub Pages](https://CorvidLabs.github.io/swift-game/documentation/game).
 
 ## Contributing
 
