@@ -1,14 +1,14 @@
 import Foundation
 
 /// Protocol for type-erased managed tweens.
-private protocol AnyManagedTween: AnyObject {
+private protocol AnyManagedTween: AnyObject, Sendable {
     var id: UUID { get }
     var onComplete: (@Sendable () -> Void)? { get }
     func update(deltaTime: Double) -> Bool
 }
 
 /// Manages multiple tweens and their lifecycle.
-public final class TweenManager: @unchecked Sendable {
+public actor TweenManager {
     /// A managed tween with an identifier and completion callback.
     private final class ManagedTweenBox<Value: Tweenable>: AnyManagedTween, @unchecked Sendable {
         let id: UUID

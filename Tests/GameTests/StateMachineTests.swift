@@ -38,68 +38,71 @@ struct StateMachineTests {
     }
 
     @Test("StateMachine initialization")
-    func stateMachineInitialization() {
+    func stateMachineInitialization() async {
         let sm = StateMachine<GameState>(initialState: .idle)
-        #expect(sm.current == .idle)
+        let current = await sm.current
+        #expect(current == .idle)
     }
 
     @Test("StateMachine state registration")
-    func stateMachineStateRegistration() {
+    func stateMachineStateRegistration() async {
         let sm = StateMachine<GameState>(initialState: .idle)
         let idleState = TestState()
         let runningState = TestState()
 
-        sm.register(state: .idle, handler: idleState)
-        sm.register(state: .running, handler: runningState)
+        await sm.register(state: .idle, handler: idleState)
+        await sm.register(state: .running, handler: runningState)
 
-        #expect(sm.current == .idle)
+        let current = await sm.current
+        #expect(current == .idle)
     }
 
     @Test("StateMachine transitions")
-    func stateMachineTransitions() {
+    func stateMachineTransitions() async {
         let sm = StateMachine<GameState>(initialState: .idle)
         let idleState = TestState()
         let runningState = TestState()
 
-        sm.register(state: .idle, handler: idleState)
-        sm.register(state: .running, handler: runningState)
+        await sm.register(state: .idle, handler: idleState)
+        await sm.register(state: .running, handler: runningState)
 
-        sm.transition(to: .running)
+        await sm.transition(to: .running)
 
-        #expect(sm.current == .running)
+        let current = await sm.current
+        #expect(current == .running)
         #expect(idleState.exitCount == 1)
         #expect(runningState.enterCount == 1)
     }
 
     @Test("StateMachine same state transition")
-    func stateMachineSameStateTransition() {
+    func stateMachineSameStateTransition() async {
         let sm = StateMachine<GameState>(initialState: .idle)
         let idleState = TestState()
 
-        sm.register(state: .idle, handler: idleState)
+        await sm.register(state: .idle, handler: idleState)
 
-        sm.transition(to: .idle)
+        await sm.transition(to: .idle)
 
         #expect(idleState.exitCount == 0)
         #expect(idleState.enterCount == 0)
     }
 
     @Test("StateMachine update")
-    func stateMachineUpdate() {
+    func stateMachineUpdate() async {
         let sm = StateMachine<GameState>(initialState: .running)
         let runningState = TestState()
 
-        sm.register(state: .running, handler: runningState)
+        await sm.register(state: .running, handler: runningState)
 
-        sm.update(deltaTime: 0.016)
-        sm.update(deltaTime: 0.016)
+        await sm.update(deltaTime: 0.016)
+        await sm.update(deltaTime: 0.016)
 
         #expect(runningState.updateCount == 2)
         #expect(abs(runningState.totalDeltaTime - 0.032) < 0.0001)
     }
 
     @Test("StateMachine transition callbacks")
-    func stateMachineTransitionCallbacks() {
+    func stateMachineTransitionCallbacks() async {
         final class CallbackTracker: @unchecked Sendable {
             var callbackFired = false
             var fromState: GameState?
@@ -109,13 +112,13 @@ struct StateMachineTests {
         let sm = StateMachine<GameState>(initialState: .idle)
         let tracker = CallbackTracker()
 
-        sm.onTransition { from, to in
+        await sm.onTransition { from, to in
             tracker.callbackFired = true
             tracker.fromState = from
             tracker.toState = to
         }
 
-        sm.transition(to: .running)
+        await sm.transition(to: .running)
 
         #expect(tracker.callbackFired)
         #expect(tracker.fromState == .idle)
@@ -123,7 +126,7 @@ struct StateMachineTests {
     }
 
     @Test("StateMachine multiple callbacks")
-    func stateMachineMultipleCallbacks() {
+    func stateMachineMultipleCallbacks() async {
         final class CallbackTracker: @unchecked Sendable {
             var callback1Fired = false
             var callback2Fired = false
@@ -132,57 +135,63 @@ struct StateMachineTests {
         let sm = StateMachine<GameState>(initialState: .idle)
         let tracker = CallbackTracker()
 
-        sm.onTransition { _, _ in
+        await sm.onTransition { _, _ in
             tracker.callback1Fired = true
         }
 
-        sm.onTransition { _, _ in
+        await sm.onTransition { _, _ in
             tracker.callback2Fired = true
         }
 
-        sm.transition(to: .running)
+        await sm.transition(to: .running)
 
         #expect(tracker.callback1Fired)
         #expect(tracker.callback2Fired)
     }
 
     @Test("StateMachine state queries")
-    func stateMachineStateQueries() {
+    func stateMachineStateQueries() async {
         let sm = StateMachine<GameState>(initialState: .idle)
 
-        #expect(sm.isInState(.idle))
-        #expect(!sm.isInState(.running))
+        let isIdle = await sm.isInState(.idle)
+        var isRunning = await sm.isInState(.running)
+        #expect(isIdle)
+        #expect(!isRunning)
 
-        #expect(sm.isInAnyState([.idle, .paused]))
-        #expect(!sm.isInAnyState([.running, .gameOver]))
+        let isInIdleOrPaused = await sm.isInAnyState([.idle, .paused])
+        let isInRunningOrGameOver = await sm.isInAnyState([.running, .gameOver])
+        #expect(isInIdleOrPaused)
+        #expect(!isInRunningOrGameOver)
 
-        sm.transition(to: .running)
+        await sm.transition(to: .running)
 
-        #expect(sm.isInState(.running))
-        #expect(sm.isInAnyState([.running, .paused]))
+        isRunning = await sm.isInState(.running)
+        let isInRunningOrPaused = await sm.isInAnyState([.running, .paused])
+        #expect(isRunning)
+        #expect(isInRunningOrPaused)
     }
 
     @Test("StateMachine complex flow")
-    func stateMachineComplexFlow() {
+    func stateMachineComplexFlow() async {
         let sm = StateMachine<GameState>(initialState: .idle)
         let idleState = TestState()
         let runningState = TestState()
         let pausedState = TestState()
 
-        sm.register(states: [
+        await sm.register(states: [
             .idle: idleState,
             .running: runningState,
             .paused: pausedState
         ])
 
-        sm.transition(to: .running)
-        sm.update(deltaTime: 0.016)
+        await sm.transition(to: .running)
+        await sm.update(deltaTime: 0.016)
 
-        sm.transition(to: .paused)
-        sm.update(deltaTime: 0.016)
+        await sm.transition(to: .paused)
+        await sm.update(deltaTime: 0.016)
 
-        sm.transition(to: .running)
-        sm.update(deltaTime: 0.016)
+        await sm.transition(to: .running)
+        await sm.update(deltaTime: 0.016)
 
         #expect(idleState.enterCount == 0)
         #expect(idleState.exitCount == 1)

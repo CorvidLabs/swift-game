@@ -1,7 +1,7 @@
 import Foundation
 
 /// Schedules and manages timed events.
-public final class Scheduler: @unchecked Sendable {
+public actor Scheduler {
     /// A scheduled event with its callback.
     public struct ScheduledEvent: Sendable {
         let id: UUID
