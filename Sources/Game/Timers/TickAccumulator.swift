@@ -1,7 +1,9 @@
 import Foundation
 
-/// Accumulates time for fixed timestep updates.
-/// Useful for physics simulation and other fixed-rate logic.
+/**
+ Accumulates time for fixed timestep updates.
+ Useful for physics simulation and other fixed-rate logic.
+ */
 public struct TickAccumulator: Sendable {
     public let fixedDeltaTime: Double
     private var accumulator: Double
@@ -22,14 +24,18 @@ public struct TickAccumulator: Sendable {
         Int(accumulator / fixedDeltaTime)
     }
 
-    /// The interpolation factor for smooth rendering between ticks.
-    /// Value between 0 and 1 representing partial progress to the next tick.
+    /**
+     The interpolation factor for smooth rendering between ticks.
+     Value between 0 and 1 representing partial progress to the next tick.
+     */
     public var alpha: Double {
         accumulator / fixedDeltaTime - Double(tickCount)
     }
 
-    /// Adds frame time to the accumulator.
-    /// Returns the number of ticks that should be processed.
+    /**
+     Adds frame time to the accumulator.
+     Returns the number of ticks that should be processed.
+     */
     @discardableResult
     public mutating func add(deltaTime: Double) -> Int {
         accumulator += deltaTime

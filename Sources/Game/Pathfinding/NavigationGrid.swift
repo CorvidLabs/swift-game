@@ -5,10 +5,13 @@ public struct NavigationGrid: Sendable {
     private let grid: Grid2D<Bool>
     private let allowDiagonal: Bool
 
-    /// Creates a navigation grid with walkability information.
-    /// - Parameters:
-    ///   - grid: Grid where true indicates walkable, false indicates blocked.
-    ///   - allowDiagonal: Whether diagonal movement is allowed.
+    /**
+     Creates a navigation grid with walkability information.
+
+     - Parameters:
+       - grid: Grid where true indicates walkable, false indicates blocked.
+       - allowDiagonal: Whether diagonal movement is allowed.
+     */
     public init(grid: Grid2D<Bool>, allowDiagonal: Bool = false) {
         self.grid = grid
         self.allowDiagonal = allowDiagonal
