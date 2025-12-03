@@ -1,60 +1,25 @@
-# swift-game
+# Game
+
+[![macOS](https://img.shields.io/github/actions/workflow/status/0xLeif/swift-game/macOS.yml?label=macOS&branch=main)](https://github.com/0xLeif/swift-game/actions/workflows/macOS.yml)
+[![ubuntu](https://img.shields.io/github/actions/workflow/status/0xLeif/swift-game/ubuntu.yml?label=ubuntu&branch=main)](https://github.com/0xLeif/swift-game/actions/workflows/ubuntu.yml)
+[![License](https://img.shields.io/github/license/0xLeif/swift-game)](https://github.com/0xLeif/swift-game/blob/main/LICENSE)
+[![Version](https://img.shields.io/github/v/release/0xLeif/swift-game)](https://github.com/0xLeif/swift-game/releases)
 
 A comprehensive, protocol-oriented game development library for Swift 6.
 
-## Overview
+## What is Game?
 
-`swift-game` provides essential building blocks for game development in pure Swift. Built with strict concurrency in mind, all public types conform to `Sendable` and work seamlessly across platforms.
+Game provides essential building blocks for game development in pure Swift. Built with strict concurrency in mind, all public types conform to `Sendable` and work seamlessly across platforms. The library includes math primitives, collision detection, spatial partitioning, state machines, timers, pathfinding, an entity-component system, random number generation, and tweening.
 
-## Features
+## Requirements
 
-### Math
-- **Vec2** & **Vec3**: Full-featured vectors with arithmetic, dot/cross products, normalization
-- **Angle**: Type-safe angle handling with degrees/radians conversion
-- **Interpolation**: lerp, inverseLerp, remap, smoothstep, smootherstep, exponential decay, spring
-- **Easing**: 30+ easing functions (linear, quadratic, cubic, sine, exponential, elastic, bounce, back)
-
-### Collision
-- **AABB**: Axis-aligned bounding box collision detection
-- **Circle**: Circle collision with AABBs and other circles
-- **Ray** & **Raycast**: Full raycasting system with hit detection
-
-### Spatial
-- **GridCoord**: Discrete 2D grid coordinates with neighbor queries
-- **Grid2D**: Generic 2D grid data structure with mapping and queries
-- **Quadtree**: Spatial partitioning for efficient range queries
-- **SpatialHash**: Hash-based spatial partitioning for broad-phase collision
-
-### State Machine
-- **State**: Protocol-based state definitions
-- **StateMachine**: Generic finite state machine with transition callbacks
-
-### Timers
-- **Cooldown**: Action cooldown management
-- **Scheduler**: Event scheduling with one-shot and repeating timers
-- **TickAccumulator**: Fixed timestep accumulator for physics
-
-### Pathfinding
-- **Graph**: Protocol for pathfinding graphs
-- **NavigationGrid**: Grid-based navigation with walkability
-- **AStar**: A* pathfinding with customizable heuristics
-- **Heuristic**: Manhattan, Euclidean, Chebyshev, Octile distance functions
-
-### ECS (Entity Component System)
-- **Entity**: Unique entity identifiers
-- **Component**: Protocol for data-only components
-- **World**: Entity-component storage with powerful queries
-
-### Random
-- **GameRandom**: Seedable PRNG (xorshift128+) for deterministic randomness
-- **Dice**: RPG dice notation parsing and rolling (2d6+3)
-- **WeightedRandom**: Weighted random selection
-- **LootTable**: Loot generation with drop chances
-
-### Tweening
-- **Tweenable**: Protocol for types that can be animated
-- **Tween**: Single value animation with easing
-- **TweenManager**: Manage multiple concurrent tweens
+- **Swift** 6.0+
+- **Platforms**
+  - iOS 16+
+  - macOS 13+
+  - tvOS 16+
+  - watchOS 9+
+  - visionOS 1+
 
 ## Installation
 
@@ -66,7 +31,7 @@ dependencies: [
 ]
 ```
 
-## Usage Examples
+## Usage
 
 ### Vector Math
 ```swift
@@ -160,18 +125,14 @@ world.query(Position.self, Velocity.self) { entity, pos, vel in
 }
 ```
 
-## Platform Support
+## Documentation
 
-- iOS 15+
-- macOS 12+
-- tvOS 15+
-- watchOS 8+
-- visionOS 1+
+Documentation is available on [GitHub Pages](https://0xleif.github.io/swift-game/documentation/game).
 
-## Swift Version
+## Contributing
 
-Requires Swift 6.0 or later with strict concurrency enabled.
+If you have improvements or issues, feel free to open an issue or pull request!
 
 ## License
 
-MIT License - feel free to use in your projects!
+See [LICENSE](LICENSE)

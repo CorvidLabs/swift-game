@@ -1,8 +1,8 @@
-name: Documentation
+name: docc
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -29,6 +29,9 @@ jobs:
           --transform-for-static-hosting \
           --hosting-base-path swift-game \
           --output-path ./docs
+    - name: Add redirect
+      run: |
+        echo '<script>window.location.href = "/swift-game/documentation/game"</script>' > docs/index.html
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
