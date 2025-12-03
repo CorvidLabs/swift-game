@@ -1,7 +1,7 @@
 import Foundation
 
 /// A generic finite state machine with support for state transitions and callbacks.
-public final class StateMachine<StateType: Hashable & Sendable>: @unchecked Sendable {
+public actor StateMachine<StateType: Hashable & Sendable> {
     /// A callback that can be registered for state transitions.
     public struct TransitionCallback: Sendable {
         private let action: @Sendable (StateType, StateType) -> Void

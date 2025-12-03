@@ -135,7 +135,7 @@ struct SpatialTests {
     // MARK: - Quadtree Tests
 
     @Test("Quadtree insertion")
-    func quadtreeInsertion() {
+    func quadtreeInsertion() async {
         let bounds = AABB(x: 0, y: 0, width: 100, height: 100)
         let quadtree = Quadtree<Int>(bounds: bounds, capacity: 4)
 
@@ -143,9 +143,9 @@ struct SpatialTests {
         let item2 = Quadtree<Int>.Item(position: Vec2(x: 20, y: 20), element: 2)
         let item3 = Quadtree<Int>.Item(position: Vec2(x: 30, y: 30), element: 3)
 
-        let result1 = quadtree.insert(item1)
-        let result2 = quadtree.insert(item2)
-        let result3 = quadtree.insert(item3)
+        let result1 = await quadtree.insert(item1)
+        let result2 = await quadtree.insert(item2)
+        let result3 = await quadtree.insert(item3)
 
         #expect(result1)
         #expect(result2)
@@ -153,16 +153,17 @@ struct SpatialTests {
     }
 
     @Test("Quadtree insertion out of bounds")
-    func quadtreeInsertionOutOfBounds() {
+    func quadtreeInsertionOutOfBounds() async {
         let bounds = AABB(x: 0, y: 0, width: 100, height: 100)
         let quadtree = Quadtree<Int>(bounds: bounds)
 
         let outOfBounds = Quadtree<Int>.Item(position: Vec2(x: 200, y: 200), element: 1)
-        #expect(!quadtree.insert(outOfBounds))
+        let result = await quadtree.insert(outOfBounds)
+        #expect(!result)
     }
 
     @Test("Quadtree query range")
-    func quadtreeQueryRange() {
+    func quadtreeQueryRange() async {
         let bounds = AABB(x: 0, y: 0, width: 100, height: 100)
         let quadtree = Quadtree<Int>(bounds: bounds)
 
@@ -171,69 +172,69 @@ struct SpatialTests {
                 position: Vec2(x: Double(i * 10), y: Double(i * 10)),
                 element: i
             )
-            _ = quadtree.insert(item)
+            _ = await quadtree.insert(item)
         }
 
         let searchArea = AABB(x: 0, y: 0, width: 30, height: 30)
-        let found = quadtree.query(in: searchArea)
+        let found = await quadtree.query(in: searchArea)
 
         #expect(found.count >= 3)
     }
 
     @Test("Quadtree query near point")
-    func quadtreeQueryNearPoint() {
+    func quadtreeQueryNearPoint() async {
         let bounds = AABB(x: 0, y: 0, width: 100, height: 100)
         let quadtree = Quadtree<Int>(bounds: bounds)
 
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 50, y: 50), element: 1))
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 52, y: 52), element: 2))
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 80, y: 80), element: 3))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 50, y: 50), element: 1))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 52, y: 52), element: 2))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 80, y: 80), element: 3))
 
-        let nearby = quadtree.query(near: Vec2(x: 50, y: 50), radius: 5)
+        let nearby = await quadtree.query(near: Vec2(x: 50, y: 50), radius: 5)
         #expect(nearby.count == 2)
     }
 
     @Test("Quadtree nearest item")
-    func quadtreeNearestItem() {
+    func quadtreeNearestItem() async {
         let bounds = AABB(x: 0, y: 0, width: 100, height: 100)
         let quadtree = Quadtree<Int>(bounds: bounds)
 
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 10, y: 10), element: 1))
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 50, y: 50), element: 2))
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 90, y: 90), element: 3))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 10, y: 10), element: 1))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 50, y: 50), element: 2))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 90, y: 90), element: 3))
 
-        let nearest = quadtree.nearest(to: Vec2(x: 12, y: 12))
+        let nearest = await quadtree.nearest(to: Vec2(x: 12, y: 12))
         #expect(nearest != nil)
         #expect(nearest?.element == 1)
     }
 
     @Test("Quadtree subdivision")
-    func quadtreeSubdivision() {
+    func quadtreeSubdivision() async {
         let bounds = AABB(x: 0, y: 0, width: 100, height: 100)
         let quadtree = Quadtree<Int>(bounds: bounds, capacity: 2)
 
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 10, y: 10), element: 1))
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 20, y: 20), element: 2))
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 30, y: 30), element: 3))
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 40, y: 40), element: 4))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 10, y: 10), element: 1))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 20, y: 20), element: 2))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 30, y: 30), element: 3))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 40, y: 40), element: 4))
 
         let searchArea = AABB(x: 0, y: 0, width: 100, height: 100)
-        let all = quadtree.query(in: searchArea)
+        let all = await quadtree.query(in: searchArea)
         #expect(all.count == 4)
     }
 
     @Test("Quadtree clear")
-    func quadtreeClear() {
+    func quadtreeClear() async {
         let bounds = AABB(x: 0, y: 0, width: 100, height: 100)
         let quadtree = Quadtree<Int>(bounds: bounds)
 
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 10, y: 10), element: 1))
-        _ = quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 20, y: 20), element: 2))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 10, y: 10), element: 1))
+        _ = await quadtree.insert(Quadtree<Int>.Item(position: Vec2(x: 20, y: 20), element: 2))
 
-        quadtree.clear()
+        await quadtree.clear()
 
         let searchArea = AABB(x: 0, y: 0, width: 100, height: 100)
-        let found = quadtree.query(in: searchArea)
+        let found = await quadtree.query(in: searchArea)
         #expect(found.isEmpty)
     }
 }

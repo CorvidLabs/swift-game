@@ -1,7 +1,7 @@
 import Foundation
 
 /// The ECS world that manages entities and their components.
-public final class World: @unchecked Sendable {
+public actor World {
     private var entities: Set<Entity> = []
     private var components: [String: [Entity: any Component]] = [:]
 

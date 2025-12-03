@@ -1,7 +1,7 @@
 import Foundation
 
 /// A quadtree for efficient spatial partitioning in 2D space.
-public final class Quadtree<Element: Sendable>: @unchecked Sendable {
+public actor Quadtree<Element: Sendable> {
     /// An item stored in the quadtree with its position.
     public struct Item: Sendable {
         public let position: Vec2
@@ -30,7 +30,7 @@ public final class Quadtree<Element: Sendable>: @unchecked Sendable {
     }
 
     /// Inserts an item into the quadtree.
-    public func insert(_ item: Item) -> Bool {
+    public func insert(_ item: Item) async -> Bool {
         guard bounds.contains(item.position) else { return false }
 
         if items.count < capacity {
@@ -39,17 +39,19 @@ public final class Quadtree<Element: Sendable>: @unchecked Sendable {
         }
 
         if !divided {
-            subdivide()
+            await subdivide()
         }
 
-        return northwest?.insert(item) == true ||
-               northeast?.insert(item) == true ||
-               southwest?.insert(item) == true ||
-               southeast?.insert(item) == true
+        if await northwest?.insert(item) == true { return true }
+        if await northeast?.insert(item) == true { return true }
+        if await southwest?.insert(item) == true { return true }
+        if await southeast?.insert(item) == true { return true }
+
+        return false
     }
 
     /// Queries items within a given range.
-    public func query(in range: AABB) -> [Item] {
+    public func query(in range: AABB) async -> [Item] {
         var found: [Item] = []
 
         guard bounds.intersects(range) else { return found }
@@ -59,33 +61,33 @@ public final class Quadtree<Element: Sendable>: @unchecked Sendable {
         }
 
         if divided {
-            found.append(contentsOf: northwest?.query(in: range) ?? [])
-            found.append(contentsOf: northeast?.query(in: range) ?? [])
-            found.append(contentsOf: southwest?.query(in: range) ?? [])
-            found.append(contentsOf: southeast?.query(in: range) ?? [])
+            if let nw = northwest { found.append(contentsOf: await nw.query(in: range)) }
+            if let ne = northeast { found.append(contentsOf: await ne.query(in: range)) }
+            if let sw = southwest { found.append(contentsOf: await sw.query(in: range)) }
+            if let se = southeast { found.append(contentsOf: await se.query(in: range)) }
         }
 
         return found
     }
 
     /// Queries items within a given radius of a point.
-    public func query(near point: Vec2, radius: Double) -> [Item] {
+    public func query(near point: Vec2, radius: Double) async -> [Item] {
         let searchBounds = AABB(
             center: point,
             size: Vec2(x: radius * 2, y: radius * 2)
         )
 
-        return query(in: searchBounds).filter { item in
+        return await query(in: searchBounds).filter { item in
             item.position.distanceSquared(to: point) <= radius * radius
         }
     }
 
     /// Finds the nearest item to a given point.
-    public func nearest(to point: Vec2) -> Item? {
+    public func nearest(to point: Vec2) async -> Item? {
         var closest: Item?
         var closestDistance = Double.infinity
 
-        findNearest(
+        await findNearest(
             to: point,
             closest: &closest,
             closestDistance: &closestDistance
@@ -98,7 +100,7 @@ public final class Quadtree<Element: Sendable>: @unchecked Sendable {
         to point: Vec2,
         closest: inout Item?,
         closestDistance: inout Double
-    ) {
+    ) async {
         guard bounds.closestPoint(to: point).distanceSquared(to: point) < closestDistance * closestDistance else {
             return
         }
@@ -112,10 +114,10 @@ public final class Quadtree<Element: Sendable>: @unchecked Sendable {
         }
 
         if divided {
-            northwest?.findNearest(to: point, closest: &closest, closestDistance: &closestDistance)
-            northeast?.findNearest(to: point, closest: &closest, closestDistance: &closestDistance)
-            southwest?.findNearest(to: point, closest: &closest, closestDistance: &closestDistance)
-            southeast?.findNearest(to: point, closest: &closest, closestDistance: &closestDistance)
+            if let nw = northwest { await nw.findNearest(to: point, closest: &closest, closestDistance: &closestDistance) }
+            if let ne = northeast { await ne.findNearest(to: point, closest: &closest, closestDistance: &closestDistance) }
+            if let sw = southwest { await sw.findNearest(to: point, closest: &closest, closestDistance: &closestDistance) }
+            if let se = southeast { await se.findNearest(to: point, closest: &closest, closestDistance: &closestDistance) }
         }
     }
 
@@ -129,7 +131,7 @@ public final class Quadtree<Element: Sendable>: @unchecked Sendable {
         southeast = nil
     }
 
-    private func subdivide() {
+    private func subdivide() async {
         let center = bounds.center
         let halfSize = bounds.size / 2
 
