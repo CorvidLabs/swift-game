@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/github/license/CorvidLabs/swift-game)](https://github.com/CorvidLabs/swift-game/blob/main/LICENSE)
 [![Version](https://img.shields.io/github/v/release/CorvidLabs/swift-game)](https://github.com/CorvidLabs/swift-game/releases)
 
+> **Pre-1.0 Notice**: This library is under active development. The API may change between minor versions until 1.0.
+
 A comprehensive, protocol-oriented game development library for Swift 6.
 
 ## What is Game?
