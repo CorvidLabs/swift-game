@@ -1,4 +1,4 @@
-name: docc
+name: Documentation
 
 on:
   push:
