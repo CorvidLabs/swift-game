@@ -22,6 +22,7 @@ Game provides essential building blocks for game development in pure Swift. Buil
   - tvOS 16+
   - watchOS 9+
   - visionOS 1+
+  - Linux
 
 ## Installation
 
