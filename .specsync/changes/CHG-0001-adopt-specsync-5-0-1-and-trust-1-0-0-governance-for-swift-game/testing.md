@@ -5,6 +5,8 @@ artifact: testing
 
 # Testing
 
-- Build and test the complete package on macOS.
+- Run the native Fledge lane, build the complete package, and pass all 157 tests on macOS.
+- Require strict SpecSync validation at 35/35 files and 3,352/3,352 lines.
 - Confirm all four agents and healthy Trust configuration.
-- Audit hosted Trust and CodeQL while preserving platform workflows.
+- Audit exact-head hosted Trust and CodeQL while preserving Ubuntu, macOS, and DocC workflows.
+- Confirm `Sources/`, `Tests/`, and `Package.swift` have no migration diff.

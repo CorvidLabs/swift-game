@@ -5,5 +5,4 @@ artifact: docs
 
 # Docs
 
-Generated agent guidance documents the SDD workflow. README, public API, DocC
-inputs, package products, releases, and platform documentation are unchanged.
+Generated agent guidance documents the SDD workflow. CHG-0002 adds the source-derived canonical companion. README, public API implementation, DocC inputs, package products, releases, and platform documentation remain unchanged.

@@ -5,10 +5,10 @@
   "title": "Adopt SpecSync 5.0.1 and Trust 1.0.0 governance for swift-game",
   "description": "Adopt SpecSync 5.0.1 and Trust 1.0.0 governance for swift-game",
   "kind": "migration",
-  "state": "draft",
+  "state": "accepted",
   "base_commit": "60ed8e732e41dd19b4770e700881601f51f6b8b1",
   "created_at": 1783885543,
-  "updated_at": 1783885554,
+  "updated_at": 1784008049,
   "affected_specs": [],
   "affected_paths": [
     "Sources/",
@@ -24,9 +24,9 @@
     "AGENTS.md"
   ],
   "no_spec_change": true,
-  "no_spec_change_rationale": "This migration changes repository governance only and does not alter the existing Swift package API or behavior",
+  "no_spec_change_rationale": "This change configures repository governance only; CHG-0002 separately records the existing API as a semantic documentation delta, while Sources Tests and Package.swift remain unchanged",
   "acceptance_criteria": [
-    "SpecSync lifecycle passes at advisory threshold 0; all four agents are installed; Trust doctor and macOS Swift build and tests pass; existing Ubuntu macOS and documentation workflows remain unchanged; immutable Trust runs on every pull request"
+    "SpecSync lifecycle passes at 100 percent source coverage; all four agents are installed; Trust doctor and native Swift build and all 157 tests pass; existing Ubuntu macOS CodeQL and documentation workflows remain unchanged; immutable Trust runs on every pull request"
   ],
   "selected_artifacts": [
     "context",

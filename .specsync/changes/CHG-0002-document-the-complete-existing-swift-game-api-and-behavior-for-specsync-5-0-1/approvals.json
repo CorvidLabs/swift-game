@@ -1,0 +1,18 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1784007923,
+      "digest": "16d0c05e0fa84c3d3865571411dd77f7028c7d9f9095254bb93a939cb69a7c04",
+      "note": "Definition approved after complete 35-file API inventory, A/100 review, and final header-only pre-delta requirements state"
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1784007975,
+      "digest": "532f71a1a7a34839c930cd91811ceacccba439596a090ab76f25cbb4f4fe5369",
+      "note": "Closing approval after A/100 parser review, 100 percent coverage, native build, and all 157 tests passed from clean exact-head worktree"
+    }
+  ]
+}

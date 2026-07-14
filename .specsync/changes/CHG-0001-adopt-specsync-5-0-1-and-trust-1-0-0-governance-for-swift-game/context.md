@@ -5,6 +5,4 @@ artifact: context
 
 # Context
 
-swift-game is an established game math, ECS, spatial, collision, random, tweening, state, timers, and pathfinding library with no prior canonical
-companions or SpecSync threshold. This change adds governance only and records
-an explicit no-spec-change rationale to preserve its API and behavior.
+Swift Game is an established math, ECS, spatial, collision, random, tweening, state, timer, and pathfinding library. This change adds SpecSync 5.0.1 and Trust 1.0.0 governance only. CHG-0002 owns the source-derived canonical companion, allowing this migration to preserve an accurate no-product-change rationale without leaving contract coverage at zero.

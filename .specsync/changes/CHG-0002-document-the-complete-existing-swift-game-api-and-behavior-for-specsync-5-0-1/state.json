@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "CHG-0002-document-the-complete-existing-swift-game-api-and-behavior-for-specsync-5-0-1",
+  "slug": "document-the-complete-existing-swift-game-api-and-behavior-for-specsync-5-0-1",
+  "title": "Document the complete existing Swift Game API and behavior for SpecSync 5.0.1",
+  "description": "Document the complete existing Swift Game API and behavior for SpecSync 5.0.1",
+  "kind": "documentation",
+  "state": "accepted",
+  "base_commit": "b841f2ea6df9537ba766d7dd5a1f13635302ab3f",
+  "created_at": 1784007878,
+  "updated_at": 1784007975,
+  "affected_specs": [
+    "game"
+  ],
+  "affected_paths": [
+    "specs/game"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "Active companion maps all 35 source files and 3352 source lines at 100 percent",
+    "documents every parser-visible export with final substantive content",
+    "native Fledge build and all 157 deterministic tests pass",
+    "all four agent integrations and Trust doctor pass",
+    "and Sources Tests Package.swift remain unchanged"
+  ],
+  "selected_artifacts": [
+    "context",
+    "docs",
+    "research",
+    "testing"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}

@@ -1,3 +1,18 @@
 {
-  "approvals": []
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1784008003,
+      "digest": "1201b70e35d617144c37423e617ca206307f41ea10199e63c569d4ca14802a63",
+      "note": "Definition approved after CHG2 atomically established the final 12-requirement canonical companion"
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1784008049,
+      "digest": "70e7e5ec106cd416b83772fbd643d06bba0a7b2b2b5d4eb644ebf5614a1591ed",
+      "note": "Closing approval after final canonical companion, 100 percent contract validation, native build, and all 157 tests passed"
+    }
+  ]
 }
